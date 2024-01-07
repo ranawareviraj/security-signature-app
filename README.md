@@ -1,4 +1,37 @@
-**Installations**
+# Security Signature Verification Application
+
+## Overview:
+
+The application employes the security signature verification for verifying the origin and integrity of a message. It can be used for variety of applications.
+
+**Data Integrity:**
+- When transmitting sensitive information over a network, ensuring that the data has not been tampered with during transit is crucial.
+- By digitally signing a message, the sender creates a unique checksum (signature) based on the message content. The recipient can then verify this signature to confirm the integrity of the received data.
+
+**Message Authentication:**
+- The digital signature provides a means of verifying that the message was indeed sent by the expected sender.
+- If the signature is valid, the recipient can trust the origin of the message.
+
+**Secure Communication:**
+- Digital signatures help in ensuring that the data exchanged between the parties is both secure and authentic.
+- Verifying the signature ensures that the data has not been modified and that it originated from the expected sender.
+
+
+## Application Workflow
+**Certificate Generation:**
+- The sender generates a key pair and creates a self-signed certificate.
+- The sender shares the public key via the certificate with the receiver.
+
+**Signing a Message:**
+
+- The sender sends a POST request to http://127.0.0.1:8080/sign with a payload.
+- The application signs the payload and returns the digitally signed message (checksum).
+
+**Verifying a Message:**
+- The receiver sends a POST request to http://127.0.0.1:8080/verify with a payload and the received checksum.
+- The application verifies the payload against the provided checksum.
+
+## Installation Steps:
 
 - Create JKS certificate using below command (Use keytool which is a tool which comes with JDK installation):
 
@@ -31,9 +64,10 @@ mvn spring-boot:run
 ```
 
 -------
-### URL to access API end points:
 
-**Signing a message:**
+## URL to access API endpoints:
+
+**1. Signing a message:**
 
 ```
 POST http://127.0.0.1:8080/sign 
@@ -42,7 +76,7 @@ POST http://127.0.0.1:8080/sign
 }
 ```
 
-**Verifying at receiver end:**
+**2. Verifying at receiver end:**
 ```
 POST http://127.0.0.1:8080/verify
 {
